@@ -1,0 +1,67 @@
+name: GorillaAuth
+
+on:
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Swatinem/rust-cache@v2
+      - run: rustup target add wasm32-unknown-unknown
+      - name: Install Leptos
+        run: cargo install --locked cargo-leptos
+      - name: Build leptos
+        run: cargo-leptos build
+      - name: Build service
+        run: cargo build -p gorillaauth_service
+      - name: Run leptos tests
+        run: cargo-leptos test
+      - name: Run service tests
+        run: cargo test -p gorillaauth_service
+  build-website:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    needs: test
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@main
+      - name: 'Login to GitHub Container Registry'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+      - name: 'Build GorillaAuth Website'
+        run: |
+          docker build . --tag ghcr.io/welshdragon/gorillaauth_webite:latest -f GorillaAuth/gorillaauth_website.Dockerfile
+          docker push ghcr.io/welshdragon/gorillaauth_website:latest
+  build-service:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    needs: test
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@main
+      - name: 'Login to GitHub Container Registry'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+      - name: 'Build GorillaAuth Service'
+        run: |
+          docker build . --tag ghcr.io/welshdragon/gorillaauth_service:latest -f GorillaAuth/gorillaauth_service.Dockerfile
+          docker push ghcr.io/welshdragon/gorillaauth_service:latest
+        
+  
