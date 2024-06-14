@@ -51,11 +51,11 @@ ssr = [
 
 [package.metadata.leptonic]
 # REQUIRED: Leptonic's build-script will copy the Leptonic themes to this directory. Relative to your project root.
-style-dir = "style"
+style-dir = "GorillaAuth/gorillaauth_website/style"
 
 # REQUIRED: Leptonic's build-script will copy static JS dependencies to this directory. Relative to your project root.
 # Leptonic's `<Root>` component expects JS files to be available at a "js" directory at runtime (for dynamic script includes). Specify a different prop value if you choose a non-stadard location here. 
-js-dir = "public/js"
+js-dir = "GorillaAuth/gorillaauth_website/public/js"
 
 [package.metadata.leptos]
 # The name used by wasm-bindgen/cargo-leptos for the JS/WASM bundle. Defaults to the crate name
