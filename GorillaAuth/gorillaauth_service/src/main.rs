@@ -1,6 +1,7 @@
 
 use tokio::net::TcpListener;
 use gorillaauth_service::app;
+use gorillaauth_service::util;
 
 #[tokio::main]
 async fn main() {
@@ -9,6 +10,8 @@ async fn main() {
     let listener = TcpListener::bind(server_address)
         .await
         .expect("Unable to connect to server!");
+
+    util::tracing::init();
 
     let routes = app();
 

@@ -13,7 +13,7 @@ opt-level = 3
 
 [workspace.dependencies]
 axum = { version = "0.7.4" }
-axum-server = { version = "0.6.0", features = ["tls-rustls"] }
+axum-server = { version = "0.7.1", features = ["tls-rustls"] }
 bcrypt = "0.15.1"
 cfg-if = "1.0.0"
 console_error_panic_hook = "0.1.7"
@@ -30,7 +30,7 @@ serde_json = "1.0.113"
 thiserror = "1.0.56"
 time = { version = "0.3.36", features = ["wasm-bindgen"] }
 tokio = { version = "1.36.0", features = ["full"] }
-tower = { version = "0.4.13", features = ["full"]}
+tower = { version = "0.5.0", features = ["full"]}
 tower-http = { version = "0.5.1", features = ["full"] }
 tracing = "0.1.40"
 tracing-subscriber = "0.3.18"

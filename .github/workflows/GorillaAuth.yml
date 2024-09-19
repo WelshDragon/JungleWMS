@@ -42,7 +42,7 @@ jobs:
           password: ${{secrets.GITHUB_TOKEN}}
       - name: 'Build GorillaAuth Website'
         run: |
-          docker build . --tag ghcr.io/welshdragon/gorillaauth_webite:latest -f GorillaAuth/gorillaauth_website.Dockerfile
+          docker build . --tag ghcr.io/welshdragon/gorillaauth_website:latest -f GorillaAuth/gorillaauth_website.Dockerfile
           docker push ghcr.io/welshdragon/gorillaauth_website:latest
   build-service:
     runs-on: ubuntu-latest
